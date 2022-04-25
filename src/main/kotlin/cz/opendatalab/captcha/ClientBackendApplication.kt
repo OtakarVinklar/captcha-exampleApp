@@ -1,4 +1,4 @@
-package com.example.captcha
+package cz.opendatalab.captcha
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

@@ -1,4 +1,4 @@
-package com.example.captcha
+package cz.opendatalab.captcha
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

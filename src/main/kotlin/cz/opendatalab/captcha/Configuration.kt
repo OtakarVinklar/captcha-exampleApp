@@ -1,4 +1,4 @@
-package com.example.captcha
+package cz.opendatalab.captcha
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

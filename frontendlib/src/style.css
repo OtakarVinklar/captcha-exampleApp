@@ -1,0 +1,55 @@
+.choiceElement {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    object-position: center;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #efefef;
+    margin: 0;
+}
+
+.choiceGrid {
+    margin: 0;
+    padding: 0;
+}
+.choiceGridRow {
+    display: flex;
+}
+
+.choiceElement:hover {
+    opacity: 0.75;
+}
+
+.selectedChoice {
+    border-color: #268eff;
+}
+
+.captchaSubmitButton {
+    background-color: #268eff;
+    color: white;
+    box-shadow: 1px 1px 3px #6c6a6a;
+    transition: box-shadow 0.1s;
+    border-width: 0;
+    border-radius: 11px;
+    font-size: 18px;
+    margin: 10px;
+    padding: 5px 10px;
+}
+
+.captchaSubmitButton:hover {
+    opacity: 0.8;
+}
+
+.captchaSubmitButton:active {
+    box-shadow: 0px 0px 0px #e7e7e7;
+}
+
+.captcha-verification {
+    border-radius: 12px;
+    border-color: #268eff;
+    border-style: solid;
+    padding: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}

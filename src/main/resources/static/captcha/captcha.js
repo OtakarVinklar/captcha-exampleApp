@@ -47,15 +47,66 @@ const Captcha = (function (exports) {
     }
 
     function create_answersheet(elem, answer_sheet) {
-        displayTask(answer_sheet.displayData, elem)
-
         switch (answer_sheet.answerType) {
             case 'TextListAnswer':
-                return create_MultipleText_anwersheet(elem, answer_sheet);
+                return create_MultipleChoice_anwersheet(elem, answer_sheet.displayData);
             case 'TextAnswer':
-                return create_TextField_Answersheet(elem, answer_sheet);
+                return create_TextField_Answersheet(elem, answer_sheet.displayData);
             default:
                 throw Error(`Unknown answerType: ${answer_sheet.type}`)
+        }
+    }
+
+
+
+    function create_MultipleChoice_anwersheet(elem, display_data) {
+        const answerSet = new Set();
+        const choices = display_data.listData
+
+        const grid = document.createElement('div');
+        grid.classList.add('choiceGrid')
+        let row;
+
+        for (const [index, choice] of choices.entries()) {
+            if (index % 3 === 0) {
+                row = document.createElement('div');
+                row.classList.add('choiceGridRow')
+                grid.append(row)
+            }
+            const choiceElement = createChoiceElement(index, choice, answerSet)
+            row.append(choiceElement)
+        }
+        elem.append(grid)
+
+        return () => {
+            return {type: 'TextListAnswer', texts: Array.from(answerSet)}
+        }
+    }
+
+    function createChoiceElement(id, choice, answerSet) {
+        const choiceElement = createDisplayElement(choice)
+        choiceElement.onclick = (e => {
+            choiceElement.classList.toggle('selectedChoice')
+            if (answerSet.has(id)) {
+                answerSet.delete(id)
+            }
+            else {
+                answerSet.add(id)
+            }
+        })
+        return choiceElement
+    }
+
+    function create_TextField_Answersheet(elem, displayData) {
+        displayTask(displayData, elem)
+        const text_input = document.createElement('input')
+
+        text_input.setAttribute('type', "text");
+
+        elem.appendChild(text_input);
+
+        return () => {
+            return {type: 'TextAnswer', text: text_input.value}
         }
     }
 
@@ -70,7 +121,8 @@ const Captcha = (function (exports) {
                 const image_element = document.createElement('img');
                 // image_element.setAttribute('title', choice.imageId);
                 image_element.setAttribute('src', data.base64ImageString);
-                image_element.setAttribute('width', '200px');
+                image_element.classList.add('choiceElement')
+
                 return image_element
 
             case 'ListDisplayData':
@@ -82,32 +134,11 @@ const Captcha = (function (exports) {
         }
     }
 
-    function create_MultipleText_anwersheet(elem, answer_sheet_data) {
-        const text_input = document.createElement('input');
-        text_input.setAttribute('type', "text");
-        elem.appendChild(text_input)
-
-        return () => {
-            return {type: 'TextListAnswer', texts: text_input.value.split(',')}
-        }
-    }
-
-    function create_TextField_Answersheet(elem, answer_sheet_data) {
-        const text_input = document.createElement('input')
-
-        text_input.setAttribute('type', "text");
-
-        elem.appendChild(text_input);
-
-        return () => {
-            return {type: 'TextAnswer', text: text_input.value}
-        }
-    }
-
     function create_submit_button(elem, answer_data_lambda) {
         const buttonElement = document.createElement('button')
         buttonElement.innerHTML = 'Submit captcha'
         buttonElement.setAttribute('type', 'button')
+        buttonElement.classList.add('captchaSubmitButton')
 
         buttonElement.addEventListener('click', () => {
             get_token(elem.dataset[TASKID_DATA_ATTRIBUTE], answer_data_lambda(), response => {

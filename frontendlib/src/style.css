@@ -19,6 +19,7 @@
 
 .choiceElement:hover {
     opacity: 0.75;
+    cursor: pointer;
 }
 
 .selectedChoice {
@@ -52,4 +53,6 @@
     padding: 10px;
     font-size: 17px;
     font-weight: 600;
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
 }

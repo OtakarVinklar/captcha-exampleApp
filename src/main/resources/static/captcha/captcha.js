@@ -37,6 +37,7 @@ const Captcha = (function (exports) {
 
             const descriptionElem = document.createElement('p')
             const text = document.createTextNode(response.data.description)
+            descriptionElem.classList.add("captcha-description")
             descriptionElem.appendChild(text)
             elem.appendChild(descriptionElem)
 

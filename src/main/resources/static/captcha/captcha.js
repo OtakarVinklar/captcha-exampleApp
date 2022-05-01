@@ -41,20 +41,26 @@ const Captcha = (function (exports) {
             descriptionElem.appendChild(text)
             elem.appendChild(descriptionElem)
 
-            const answer_data_lambda = create_answersheet(elem, response.data.answerSheet)
+            const answer_data_lambda = create_answersheet(elem, response.data.answerSheet, response.data.taskType)
 
             create_submit_button(elem, answer_data_lambda)
         })
     }
 
-    function create_answersheet(elem, answer_sheet) {
-        switch (answer_sheet.answerType) {
+    function create_answersheet(elem, answerSheet, taskType) {
+
+        switch (taskType) {
+            case "TEXT":
+                return create_imageWithTextField_Answersheet(elem, answerSheet.displayData)
+        }
+
+        switch (answerSheet.answerType) {
             case 'TextListAnswer':
-                return create_MultipleChoice_anwersheet(elem, answer_sheet.displayData);
+                return create_MultipleChoice_anwersheet(elem, answerSheet.displayData);
             case 'TextAnswer':
-                return create_TextField_Answersheet(elem, answer_sheet.displayData);
+                return create_TextField_Answersheet(elem, answerSheet.displayData);
             default:
-                throw Error(`Unknown answerType: ${answer_sheet.type}`)
+                throw Error(`Unknown answerType: ${answerSheet.type}`)
         }
     }
 
@@ -86,6 +92,8 @@ const Captcha = (function (exports) {
 
     function createChoiceElement(id, choice, answerSet) {
         const choiceElement = createDisplayElement(choice)
+        choiceElement.classList.add('choiceElement')
+
         choiceElement.onclick = (e => {
             choiceElement.classList.toggle('selectedChoice')
             if (answerSet.has(id)) {
@@ -98,8 +106,15 @@ const Captcha = (function (exports) {
         return choiceElement
     }
 
-    function create_TextField_Answersheet(elem, displayData) {
-        displayTask(displayData, elem)
+    function create_imageWithTextField_Answersheet(elem, displayData) {
+        const imageElem = createDisplayElement(displayData, elem)
+        imageElem.classList.add('captcha-single-image')
+
+        elem.appendChild(imageElem)
+        return create_TextField_Answersheet(elem)
+    }
+
+    function create_TextField_Answersheet(elem) {
         const text_input = document.createElement('input')
 
         text_input.setAttribute('type', "text");
@@ -122,7 +137,6 @@ const Captcha = (function (exports) {
                 const image_element = document.createElement('img');
                 // image_element.setAttribute('title', choice.imageId);
                 image_element.setAttribute('src', data.base64ImageString);
-                image_element.classList.add('choiceElement')
 
                 return image_element
 

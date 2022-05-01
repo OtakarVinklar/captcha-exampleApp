@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="captcha/captcha.js" defer></script>
-    <script src="scripts.js" defer></script>
+    <script src="app.js" defer></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,10 +38,10 @@
                     <label for="msg">Message</label>
                     <textarea id="msg" v-model="user_message"></textarea>
                 </div>
-                <div id="captcha_element" class="captcha-verification" data-sitekey="siteKey3">
+                <div id="captcha_element" class="captcha-verification" data-sitekey="siteKey4">
                 </div>
                 <div class="button">
-                    <button class="add-comment-button" type="button" v-on:click="addComment">Create comment</button>
+                    <button class="add-comment-button" type="button" v-on:click="addComment">Add message</button>
                 </div>
             </form>
         </div>

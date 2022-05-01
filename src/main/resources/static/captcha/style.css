@@ -50,6 +50,12 @@
     margin-top: 4px;
 }
 
+.captcha-single-image {
+    max-width: 500px;
+    display: block;
+    margin-bottom: 10px;
+}
+
 .captcha-verification {
     border-radius: 12px;
     border-color: #268eff;

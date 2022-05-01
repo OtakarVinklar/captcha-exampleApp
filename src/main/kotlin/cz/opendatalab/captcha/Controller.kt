@@ -19,8 +19,8 @@ const val SECRET_KEY = "secretKey3"
 @RequestMapping(COMMENTS_ENDPOINT)
 class Controller(private val webClient: WebClient) {
 
-    val comments = mutableListOf(Comment("John", "Hello fellas"),
-        Comment("Aleksandr", "Hello friendz"))
+    val comments = mutableListOf(Comment("John Smith", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut laoreet porttitor ultrices. Quisque scelerisque erat ipsum, sit amet vulputate ipsum pretium at. Donec convallis quam vel diam sollicitudin feugiat. Duis rutrum odio id elit pellentesque porttitor."),
+        Comment("Peter Brown", "Aenean consequat, massa eu laoreet ultrices, sem massa lobortis odio, nec tincidunt erat nibh sit amet lorem. In maximus nulla odio, at interdum sapien malesuada id."))
 
     @GetMapping
     fun getCommentList(): List<Comment> {
